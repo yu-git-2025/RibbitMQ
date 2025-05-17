@@ -5,6 +5,7 @@ spring:
     virtual-host: yu
     username: yu
     password: 2023
+#    负载均衡
     listener:
       simple:
         prefetch: 1
