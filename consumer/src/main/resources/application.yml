@@ -5,7 +5,16 @@ spring:
     virtual-host: yu
     username: yu
     password: 2023
-#    负载均衡
+    #负载均衡
     listener:
       simple:
         prefetch: 1
+        #消费者确认
+        acknowledge-mode: auto    #自动模式ack  SpringAMQP利用AOP对消息处理逻辑做了环绕增强
+        #失败重试机制
+        retry:
+          enabled: true     #开启消费者失败重试
+          initial-interval: 1000ms   #初始的失败等待时长为 1s
+          multiplier: 1   #下次失败后的等待时长倍数,下次等待时长 = initial-interval * multiplier
+          max-attempts: 3  #最大重试次数
+          stateless: true  #true-无状态-适合幂等操作, false-有状态-如果业务中包含事务,这里用false
